@@ -15,60 +15,59 @@ import org.yamkazu.jsr303_samples.ValidationTestBase;
 
 public class SizeTest extends ValidationTestBase {
 
-    @Size(min = 10)
-    String str;
+	@Size(min = 10)
+	String str;
 
-    @Size(min = 3, max = 6)
-    List<Integer> list;
+	@Size(min = 3, max = 6)
+	List<Integer> list;
 
-    @Size
-    Map<String, Integer> map;
+	@Size
+	Map<String, Integer> map;
 
-    @Size(max = 100)
-    int[] array;
+	@Size(max = 100)
+	int[] array;
 
+	public int[] getArray() {
+		return array;
+	}
 
-    public int[] getArray() {
-        return array;
-    }
+	public List<Integer> getList() {
+		return list;
+	}
 
-    public List<Integer> getList() {
-        return list;
-    }
+	public Map<String, Integer> getMap() {
+		return map;
+	}
 
-    public Map<String, Integer> getMap() {
-        return map;
-    }
+	public String getStr() {
+		return str;
+	}
 
-    public String getStr() {
-        return str;
-    }
+	public void setArray(int[] array) {
+		this.array = array;
+	}
 
-    public void setArray(int[] array) {
-        this.array = array;
-    }
+	public void setList(List<Integer> list) {
+		this.list = list;
+	}
 
-    public void setList(List<Integer> list) {
-        this.list = list;
-    }
+	public void setMap(Map<String, Integer> map) {
+		this.map = map;
+	}
 
-    public void setMap(Map<String, Integer> map) {
-        this.map = map;
-    }
+	public void setStr(String str) {
+		this.str = str;
+	}
 
-    public void setStr(String str) {
-        this.str = str;
-    }
+	@Test
+	public void バリデーションしてみる() throws Exception {
+		SizeTest bean = new SizeTest();
+		bean.setArray(new int[] { 1, 2, 3 }); // 100こ以下だからOK
+		bean.setList(Arrays.asList(1, 2, 3, 4)); // 3から6こ以内だからOK
+		bean.setMap(new HashMap<String, Integer>()); // minが0と同じでOK
+		bean.setStr("hoge"); // 10桁以下だからNG
+		assertThat(validator.validate(bean).size(), is(1));
 
-    @Test
-    public void バリデーションしてみる() throws Exception {
-        SizeTest bean = new SizeTest();
-        bean.setArray(new int[] { 1, 2, 3 }); // 100こ以下だからOK
-        bean.setList(Arrays.asList(1, 2, 3, 4)); // 3から6こ以内だからOK
-        bean.setMap(new HashMap<String, Integer>()); // minが0と同じでOK
-        bean.setStr("hoge"); // 10桁以下だからNG
-        assertThat(validator.validate(bean).size(), is(1));
-
-        printViolations(validator.validate(bean));
-    }
+		printViolations(validator.validate(bean));
+	}
 }

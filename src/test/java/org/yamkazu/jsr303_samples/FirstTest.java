@@ -14,18 +14,19 @@ import org.junit.Test;
 
 public class FirstTest {
 
-    @Test
-    public void 最初の一歩() throws Exception {
-        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        Validator validator = validatorFactory.getValidator();
-        Bean bean = new Bean();
-        bean.setAaa(false);
-        Set<ConstraintViolation<Bean>> violations = validator.validate(bean);
-        assertThat(violations.size(), is(1));
+	@Test
+	public void 最初の一歩() throws Exception {
+		ValidatorFactory validatorFactory = Validation
+				.buildDefaultValidatorFactory();
+		Validator validator = validatorFactory.getValidator();
+		Bean bean = new Bean();
+		bean.setAaa(false);
+		Set<ConstraintViolation<Bean>> violations = validator.validate(bean);
+		assertThat(violations.size(), is(1));
 
-        for (ConstraintViolation<Bean> violation : violations) {
-            System.out.println(violation.getMessage());
-        }
-    }
+		for (ConstraintViolation<Bean> violation : violations) {
+			System.out.println(violation.getMessage());
+		}
+	}
 
 }

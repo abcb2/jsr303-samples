@@ -18,20 +18,20 @@ import javax.validation.constraints.Size;
 @Documented
 @Constraint(validatedBy = {})
 @NotNull(message = "ユーザIDは必須")
-@Size(min = 4, max=10, message = "ユーザIDは{min}から{max}文字")
+@Size(min = 4, max = 10, message = "ユーザIDは{min}から{max}文字")
 public @interface UserId {
 
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
-    @Retention(RUNTIME)
-    @Documented
-    @interface List {
-        UserId[] value();
-    }
-    
-    Class<?>[] groups() default {};
+	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+	@Retention(RUNTIME)
+	@Documented
+	@interface List {
+		UserId[] value();
+	}
 
-    String message() default "{org.yamkazu.jsr303_samples.customvalidator.UserId.message}";
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	String message() default "{org.yamkazu.jsr303_samples.customvalidator.UserId.message}";
+
+	Class<? extends Payload>[] payload() default {};
 
 }

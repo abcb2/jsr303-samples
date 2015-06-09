@@ -4,16 +4,15 @@ import javax.validation.constraints.AssertTrue;
 
 public class Bean {
 
-    @AssertTrue
-    private boolean aaa;
+	@AssertTrue
+	private boolean aaa;
 
+	public boolean isAaa() {
+		return aaa;
+	}
 
-    public boolean isAaa() {
-        return aaa;
-    }
-
-    public void setAaa(boolean aaa) {
-        this.aaa = aaa;
-    }
+	public void setAaa(boolean aaa) {
+		this.aaa = aaa;
+	}
 
 }

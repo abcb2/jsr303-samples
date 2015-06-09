@@ -12,34 +12,32 @@ import org.yamkazu.jsr303_samples.ValidationTestBase;
 
 public class GroupSequenceTest extends ValidationTestBase {
 
-    @GroupSequence({ Default.class, Group1.class })
-    interface All {
-    }
+	@GroupSequence({ Default.class, Group1.class })
+	interface All {
+	}
 
-    interface Group1 {
-    }
+	interface Group1 {
+	}
 
+	@NotNull
+	Object aaa;
 
-    @NotNull
-    Object aaa;
+	@NotNull(groups = { Group1.class, Default.class })
+	Object bbb;
 
-    @NotNull(groups = { Group1.class, Default.class })
-    Object bbb;
+	@NotNull(groups = Group1.class)
+	Object ccc;
 
-    @NotNull(groups = Group1.class)
-    Object ccc;
+	@Test
+	public void バリデーションしてみる() throws Exception {
+		// 最初にDefaultが実施される
+		validateThis(All.class);
+		assertThat(validator.validate(this, All.class).size(), is(2));
 
-
-    @Test
-    public void バリデーションしてみる() throws Exception {
-        // 最初にDefaultが実施される
-        validateThis(All.class);
-        assertThat(validator.validate(this, All.class).size(), is(2));
-
-        aaa = new Object();
-        bbb = new Object();
-        // Defaultが問題なけれがGroup1が検証される
-        assertThat(validator.validate(this, All.class).size(), is(1));
-    }
+		aaa = new Object();
+		bbb = new Object();
+		// Defaultが問題なけれがGroup1が検証される
+		assertThat(validator.validate(this, All.class).size(), is(1));
+	}
 
 }

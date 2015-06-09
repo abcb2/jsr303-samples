@@ -13,60 +13,59 @@ import org.yamkazu.jsr303_samples.ValidationTestBase;
 
 public class MaxAndMinTest extends ValidationTestBase {
 
-    @Max(10)
-    String stringValue;
+	@Max(10)
+	String stringValue;
 
-    @Min(-10)
-    int intValue;
+	@Min(-10)
+	int intValue;
 
-    @Min(3)
-    @Max(4)
-    BigDecimal bigDecimalValue;
+	@Min(3)
+	@Max(4)
+	BigDecimal bigDecimalValue;
 
+	public BigDecimal getBigDecimalValue() {
+		return bigDecimalValue;
+	}
 
-    public BigDecimal getBigDecimalValue() {
-        return bigDecimalValue;
-    }
+	public int getIntValue() {
+		return intValue;
+	}
 
-    public int getIntValue() {
-        return intValue;
-    }
+	public String getStringValue() {
+		return stringValue;
+	}
 
-    public String getStringValue() {
-        return stringValue;
-    }
+	public void setBigDecimalValue(BigDecimal bigDecimalValue) {
+		this.bigDecimalValue = bigDecimalValue;
+	}
 
-    public void setBigDecimalValue(BigDecimal bigDecimalValue) {
-        this.bigDecimalValue = bigDecimalValue;
-    }
+	public void setIntValue(int intValue) {
+		this.intValue = intValue;
+	}
 
-    public void setIntValue(int intValue) {
-        this.intValue = intValue;
-    }
+	public void setStringValue(String stringValue) {
+		this.stringValue = stringValue;
+	}
 
-    public void setStringValue(String stringValue) {
-        this.stringValue = stringValue;
-    }
+	@Test
+	public void バリデーションしてみる() throws Exception {
+		MaxAndMinTest bean = new MaxAndMinTest();
+		bean.setStringValue("100"); // 10より大きいからNG
+		bean.setIntValue(-9); // -10より大きいからOK
+		bean.setBigDecimalValue(new BigDecimal("3")); // 範囲内だからOK
+		assertThat(validator.validate(bean).size(), is(1));
 
-    @Test
-    public void バリデーションしてみる() throws Exception {
-        MaxAndMinTest bean = new MaxAndMinTest();
-        bean.setStringValue("100"); // 10より大きいからNG
-        bean.setIntValue(-9); // -10より大きいからOK
-        bean.setBigDecimalValue(new BigDecimal("3")); // 範囲内だからOK
-        assertThat(validator.validate(bean).size(), is(1));
+		printViolations(validator.validate(bean));
+	}
 
-        printViolations(validator.validate(bean));
-    }
+	@Test
+	public void バリデーションしてみる_02() throws Exception {
+		MaxAndMinTest bean = new MaxAndMinTest();
+		bean.setStringValue("aaa"); // 10より大きいからNG
+		bean.setIntValue(-9); // -10より大きいからOK
+		bean.setBigDecimalValue(new BigDecimal("3.5")); // 範囲内だからOK
+		assertThat(validator.validate(bean).size(), is(1));
 
-    @Test
-    public void バリデーションしてみる_02() throws Exception {
-        MaxAndMinTest bean = new MaxAndMinTest();
-        bean.setStringValue("aaa"); // 10より大きいからNG
-        bean.setIntValue(-9); // -10より大きいからOK
-        bean.setBigDecimalValue(new BigDecimal("3.5")); // 範囲内だからOK
-        assertThat(validator.validate(bean).size(), is(1));
-
-        printViolations(validator.validate(bean));
-    }
+		printViolations(validator.validate(bean));
+	}
 }
